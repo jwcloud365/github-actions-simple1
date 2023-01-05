@@ -1,9 +1,19 @@
-name: Run Shell Commands
-on: [push, fork]
+name: Owasp Zap Github Integration
+on: [push]
 
 jobs:
-  run-shell-commands:
+  zap_scan:
     runs-on: ubuntu-latest
+    name: Scan the webapplication
     steps:
-      - name: Echo a String
-        run: echo "This is out first github action workflow file"
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.7.0
+        with:
+          docker_name: 'owasp/zap2docker-stable'
+          target: 'https://testphp.vulnweb.com'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
