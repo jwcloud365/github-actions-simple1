@@ -3,7 +3,7 @@ on: [push, fork]
 
 jobs:
   run-shell-commands:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Echo a String
         run: echo "This is out first github action workflow file"
